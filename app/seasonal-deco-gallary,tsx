@@ -1,0 +1,92 @@
+'use client'
+
+import { useState } from 'react'
+import { Card, CardContent } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Sun, Leaf, Snowflake, Flower } from "lucide-react"
+
+// Sample data for decorations
+const decorations = [
+  { id: 1, name: "Spring Wreath", season: "spring", image: "/placeholder.svg?height=200&width=200&text=🌸" },
+  { id: 2, name: "Summer Lantern", season: "summer", image: "/placeholder.svg?height=200&width=200&text=☀️" },
+  { id: 3, name: "Autumn Garland", season: "autumn", image: "/placeholder.svg?height=200&width=200&text=🍂" },
+  { id: 4, name: "Winter Snowglobe", season: "winter", image: "/placeholder.svg?height=200&width=200&text=❄️" },
+  { id: 5, name: "Spring Centerpiece", season: "spring", image: "/placeholder.svg?height=200&width=200&text=🌷" },
+  { id: 6, name: "Summer Beach Decor", season: "summer", image: "/placeholder.svg?height=200&width=200&text=🏖️" },
+  { id: 7, name: "Autumn Pumpkin Set", season: "autumn", image: "/placeholder.svg?height=200&width=200&text=🎃" },
+  { id: 8, name: "Winter Ornament Collection", season: "winter", image: "/placeholder.svg?height=200&width=200&text=🎄" },
+]
+
+export default function SeasonalDecorGallery() {
+  const [filter, setFilter] = useState('all')
+
+  const filteredDecorations = filter === 'all' 
+    ? decorations 
+    : decorations.filter(item => item.season === filter)
+
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <header className="text-center mb-8">
+        <h1 className="text-4xl font-bold mb-2">Seasonal Splendor</h1>
+        <p className="text-xl text-muted-foreground">
+          Importing and Exporting Beauty for Every Season
+        </p>
+      </header>
+
+      <div className="flex justify-center space-x-4 mb-8">
+        <Button 
+          variant={filter === 'all' ? 'default' : 'outline'} 
+          onClick={() => setFilter('all')}
+        >
+          All Seasons
+        </Button>
+        <Button 
+          variant={filter === 'spring' ? 'default' : 'outline'} 
+          onClick={() => setFilter('spring')}
+        >
+          <Flower className="mr-2 h-4 w-4" />
+          Spring
+        </Button>
+        <Button 
+          variant={filter === 'summer' ? 'default' : 'outline'} 
+          onClick={() => setFilter('summer')}
+        >
+          <Sun className="mr-2 h-4 w-4" />
+          Summer
+        </Button>
+        <Button 
+          variant={filter === 'autumn' ? 'default' : 'outline'} 
+          onClick={() => setFilter('autumn')}
+        >
+          <Leaf className="mr-2 h-4 w-4" />
+          Autumn
+        </Button>
+        <Button 
+          variant={filter === 'winter' ? 'default' : 'outline'} 
+          onClick={() => setFilter('winter')}
+        >
+          <Snowflake className="mr-2 h-4 w-4" />
+          Winter
+        </Button>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {filteredDecorations.map((item) => (
+          <Card key={item.id} className="overflow-hidden">
+            <CardContent className="p-0">
+              <img 
+                src={item.image} 
+                alt={item.name} 
+                className="w-full h-48 object-cover"
+              />
+              <div className="p-4">
+                <h3 className="font-semibold text-lg mb-2">{item.name}</h3>
+                <p className="text-sm text-muted-foreground capitalize">{item.season}</p>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    </div>
+  )
+}
